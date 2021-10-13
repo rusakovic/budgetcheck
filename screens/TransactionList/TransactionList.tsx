@@ -115,7 +115,7 @@ const TransactionList: FC = () => {
                 />
               );
             }}
-            ListFooterComponent={<ContainerSpace mtM />}
+            ListFooterComponent={<ContainerSpace mtXL />}
             keyExtractor={item => item.uuid}
           />
         )}
