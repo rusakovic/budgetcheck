@@ -7,10 +7,23 @@ import {
   widthPercentageToDP as wp,
 } from 'react-native-responsive-screen';
 import styled from '@constants/styled';
+import CurrencyFlagBalance from '@components/atoms/CurrencyFlagBalance/CurrencyFlagBalance';
 
-interface UserTransactionProps {}
+interface UserTransactionProps {
+  userId: string;
+  date: string;
+  balanceUSD: number | string;
+  balanceGBP: number | string;
+  balanceEUR: number | string;
+}
 
-const UserTransaction: FC<UserTransactionProps> = () => {
+const UserTransaction: FC<UserTransactionProps> = ({
+  userId,
+  date,
+  balanceUSD,
+  balanceEUR,
+  balanceGBP,
+}) => {
   return (
     <View style={{flex: 1, marginHorizontal: wp(4)}}>
       <View
@@ -38,7 +51,7 @@ const UserTransaction: FC<UserTransactionProps> = () => {
               borderBottomWidth: 1,
               height: '25%',
             }}>
-            <DefaultText xs>sdfsdf-sdf-sdf-sdf-sdf-sdf</DefaultText>
+            <DefaultText xs>{userId}</DefaultText>
           </ContainerCenter>
 
           {/* BALANCE  */}
@@ -54,37 +67,13 @@ const UserTransaction: FC<UserTransactionProps> = () => {
               justifyContent: 'space-between',
             }}>
             {/* EUR */}
-            <ContainerCenter flexDirectionRow alignItemsCenter>
-              <DefaultText xs style={{color: '#000000'}}>
-                🇪🇺
-              </DefaultText>
-
-              <DefaultText xs style={{marginLeft: '1%'}}>
-                123.45
-              </DefaultText>
-            </ContainerCenter>
+            <CurrencyFlagBalance flagEmoji="🇪🇺" balance={balanceEUR} />
 
             {/* GBP */}
-            <ContainerCenter flexDirectionRow alignItemsCenter>
-              <DefaultText xs style={{color: '#000000'}}>
-                🇬🇧
-              </DefaultText>
-
-              <DefaultText xs style={{marginLeft: '1%'}}>
-                -123.45
-              </DefaultText>
-            </ContainerCenter>
+            <CurrencyFlagBalance flagEmoji="🇬🇧" balance={balanceGBP} />
 
             {/* USD */}
-            <ContainerCenter flexDirectionRow alignItemsCenter>
-              <DefaultText xs style={{color: '#000000'}}>
-                🇺🇸
-              </DefaultText>
-
-              <DefaultText xs style={{marginLeft: '1%'}}>
-                123.45
-              </DefaultText>
-            </ContainerCenter>
+            <CurrencyFlagBalance flagEmoji="🇺🇸" balance={balanceUSD} />
           </ContainerCenter>
 
           {/* LAST VISIT DATE  */}
@@ -96,7 +85,7 @@ const UserTransaction: FC<UserTransactionProps> = () => {
               justifyContent: 'flex-end',
               alignItems: 'center',
             }}>
-            <DefaultText xxs2>25-02-2021</DefaultText>
+            <DefaultText xxs2>{date}</DefaultText>
           </ContainerCenter>
         </View>
       </View>

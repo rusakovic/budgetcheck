@@ -63,6 +63,7 @@
       "@mocks/*": ["./mocks/*"],
       "@types/*": ["./types/*"],
       "@constants/*": ["./constants/*"],
+      "@utils/*": ["./utils/*"],
     }
   },
   "exclude": [

@@ -23,6 +23,7 @@ module.exports = {
           '@mocks': './mocks',
           '@types': './types',
           '@constants': './constants',
+          '@utils': './utils',
         },
       },
     ],
