@@ -9,7 +9,6 @@ import {groupBy, map, sumBy, keyBy, orderBy} from 'lodash';
 import dayjs from 'dayjs';
 import {Picker} from '@react-native-picker/picker';
 import {SourceTypes} from './constants';
-import {RFPercentage} from 'react-native-responsive-fontsize';
 import styled from '@constants/styled';
 import {heightPercentageToDP as hp} from 'react-native-responsive-screen';
 
@@ -17,14 +16,10 @@ const TransactionList: FC = () => {
   const [selectedSource, setSelectedSource] = useState(SourceTypes.small);
 
   // Hook for fetching data
-  const {transactions, isLoading, error} = useFetchData();
+  const {transactions, isLoading, error} = useFetchData(selectedSource);
 
   // 1. Group all users by 'user_id'
   const groupedBy = groupBy(transactions, 'user_id');
-  console.log(
-    '🚀 ~ file: TransactionList.tsx ~ line 16 ~ groupedBy',
-    groupedBy,
-  );
 
   const balancedUserTransactions = map(groupedBy, transaction => {
     const userUUID = transaction[0].user_id;
@@ -40,11 +35,11 @@ const TransactionList: FC = () => {
     // 4. Summarize all 'amount' of a specific 'currency'
     const sumByCurrency = map(groupByCurrency, currencyGroup => {
       const currencyBalance = sumBy(currencyGroup, currencyGroupTransaction => {
-        return +currencyGroupTransaction.amount;
+        return Number(currencyGroupTransaction.amount);
       });
 
       return {
-        totalBalance: currencyBalance,
+        totalBalance: currencyBalance.toFixed(2),
         currency: currencyGroup[0].currency,
       };
     });
@@ -57,58 +52,54 @@ const TransactionList: FC = () => {
       transactions: addCurrencyKeys,
     };
   });
-  console.log(
-    '🚀 ~ file: TransactionList.tsx ~ line 48 ~ balancedUserTransactions',
-    balancedUserTransactions,
-  );
 
   return (
     <>
-      {/* LOADING INDICATOR */}
-      {isLoading ? (
-        <ContainerCenter isVerticalCenter>
-          <ActivityIndicator size="large" />
-        </ContainerCenter>
-      ) : // ERROR MESSAGE
-      error ? (
-        <ContainerCenter isContainer isVerticalCenter>
-          <DefaultText numberOfLines={4}>Error occurs: {error}</DefaultText>
-        </ContainerCenter>
-      ) : (
-        // BALANCE LIST
-        <ContainerCenter isMarginVertical1 isFullWidth>
-          <ContainerCenter flexDirectionRow isFullWidth alignItemsCenter>
-            <DefaultText isTextAlignCenter s style={{width: '50%'}}>
-              select source:
-            </DefaultText>
-            <View
-              style={{
-                width: '50%',
-                marginVertical: Platform.OS === 'ios' ? hp(-2) : 0,
+      <ContainerCenter isMarginVertical1 isFullWidth>
+        <ContainerCenter flexDirectionRow isFullWidth alignItemsCenter>
+          <DefaultText isTextAlignCenter s style={{width: '50%'}}>
+            select source:
+          </DefaultText>
+          <View
+            style={{
+              width: '50%',
+              marginVertical: Platform.OS === 'ios' ? hp(-2) : 0,
+            }}>
+            <Picker
+              selectedValue={selectedSource}
+              onValueChange={itemValue => setSelectedSource(itemValue)}
+              style={{margin: 0, padding: 0}}
+              itemStyle={{
+                height: hp(15),
+                fontSize: styled.font.size.xs,
               }}>
-              <Picker
-                selectedValue={selectedSource}
-                onValueChange={itemValue => setSelectedSource(itemValue)}
-                style={{margin: 0, padding: 0}}
-                itemStyle={{
-                  height: hp(15),
-                  fontSize: styled.font.size.xs,
-                }}>
-                <Picker.Item
-                  label={SourceTypes.small}
-                  value={SourceTypes.small}
-                />
-                <Picker.Item
-                  label={SourceTypes.medium}
-                  value={SourceTypes.medium}
-                />
-                <Picker.Item
-                  label={SourceTypes.large}
-                  value={SourceTypes.large}
-                />
-              </Picker>
-            </View>
+              <Picker.Item
+                label={SourceTypes.small}
+                value={SourceTypes.small}
+              />
+              <Picker.Item
+                label={SourceTypes.medium}
+                value={SourceTypes.medium}
+              />
+              <Picker.Item
+                label={SourceTypes.large}
+                value={SourceTypes.large}
+              />
+            </Picker>
+          </View>
+        </ContainerCenter>
+
+        {/* LOADING INDICATOR */}
+        {isLoading ? (
+          <ContainerCenter isMarginTop>
+            <ContainerSpace mtXL />
+            <ActivityIndicator size="large" />
           </ContainerCenter>
+        ) : error ? (
+          <ContainerCenter isContainer isVerticalCenter>
+            <DefaultText numberOfLines={4}>Error occurs: {error}</DefaultText>
+          </ContainerCenter>
+        ) : (
           <FlatList
             data={balancedUserTransactions}
             renderItem={({
@@ -127,8 +118,8 @@ const TransactionList: FC = () => {
             ListFooterComponent={<ContainerSpace mtM />}
             keyExtractor={item => item.uuid}
           />
-        </ContainerCenter>
-      )}
+        )}
+      </ContainerCenter>
     </>
   );
 };

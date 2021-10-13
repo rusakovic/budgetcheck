@@ -6,9 +6,11 @@ import {server, createServer} from 'miragejs';
 import cloneDeep from 'lodash/cloneDeep';
 
 import smallTransactions from 'mocks/transactions-small.json';
-
+import mediumTransactions from 'mocks/transactions-medium.json';
+import largeTransactions from 'mocks/transactions-large.json';
+import {DataTransactionAPIs} from 'constants/constants';
 // Make object mutable
-const clonedTransactions = cloneDeep(smallTransactions);
+const clonedTransactions = transactions => cloneDeep(transactions);
 
 // Initialized mock server
 if (window.server) {
@@ -17,9 +19,19 @@ if (window.server) {
 
 window.server = createServer({
   routes() {
-    this.get('/api/transactions', () => {
+    this.get(`/api/${DataTransactionAPIs.small}`, () => {
       return {
-        transactions: clonedTransactions,
+        transactions: clonedTransactions(smallTransactions),
+      };
+    });
+    this.get(`/api/${DataTransactionAPIs.medium}`, () => {
+      return {
+        transactions: clonedTransactions(mediumTransactions),
+      };
+    });
+    this.get(`/api/${DataTransactionAPIs.large}`, () => {
+      return {
+        transactions: clonedTransactions(largeTransactions),
       };
     });
   },
