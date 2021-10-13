@@ -11,8 +11,11 @@
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx"
   },
   "dependencies": {
+    "babel-plugin-module-resolver": "^4.1.0",
     "react": "17.0.2",
-    "react-native": "0.66.0"
+    "react-native": "0.66.0",
+    "react-native-responsive-fontsize": "^0.5.1",
+    "react-native-responsive-screen": "^1.4.2"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
@@ -24,7 +27,7 @@
     "babel-jest": "^26.6.3",
     "eslint": "^7.14.0",
     "jest": "^26.6.3",
-    "metro-react-native-babel-preset": "^0.66.2",
+    "miragejs": "^0.1.42",
     "react-test-renderer": "17.0.2",
     "typescript": "^3.8.3"
   },

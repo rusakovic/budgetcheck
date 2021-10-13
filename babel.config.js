@@ -20,6 +20,9 @@ module.exports = {
         alias: {
           '@components': './components',
           '@assets': './assets',
+          '@mocks': './mocks',
+          '@types': './types',
+          '@constants': './constants',
         },
       },
     ],
