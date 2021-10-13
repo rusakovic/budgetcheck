@@ -1,4 +1,4 @@
-import {TransactionType} from '@types/generalTypes';
+import {TransactionType} from 'types/generalTypes';
 import dayjs from 'dayjs';
 import {groupBy, map, orderBy, sumBy, keyBy} from 'lodash';
 

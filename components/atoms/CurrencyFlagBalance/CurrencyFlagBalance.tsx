@@ -1,4 +1,3 @@
-import {TransactionType} from 'types/generalTypes';
 import React, {FC} from 'react';
 import ContainerCenter from '../Containers/ContainerCenter';
 import DefaultText from '../Text/DefaultText/DefaultText';
