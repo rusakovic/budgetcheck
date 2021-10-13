@@ -24,11 +24,13 @@ export const useFetchData = (selectedSource: SourceTypes) => {
       } else {
         setError('Transactions not fetched');
         setIsLoading(false);
+        setTransactions([]);
       }
     } catch (error) {
       const errorMessage = error.message;
       setError(errorMessage);
       setIsLoading(false);
+      setTransactions([]);
     }
   };
 
