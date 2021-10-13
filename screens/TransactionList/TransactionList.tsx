@@ -1,25 +1,21 @@
-import React, {FC} from 'react';
-import {ActivityIndicator, FlatList} from 'react-native';
+import React, {FC, useState} from 'react';
+import {ActivityIndicator, FlatList, Platform, View} from 'react-native';
 import ContainerCenter from '@components/atoms/Containers/ContainerCenter';
 import {UserTransaction} from '@components/molecules';
 import ContainerSpace from '@components/atoms/Containers/ContainerSpace';
 import {useFetchData} from 'utils/fetchData/fetchDataHook';
 import DefaultText from '@components/atoms/Text/DefaultText/DefaultText';
-import {
-  groupBy,
-  maxBy,
-  map,
-  sumBy,
-  keyBy,
-  omitBy,
-  isNil,
-  pickBy,
-  sortBy,
-  orderBy,
-} from 'lodash';
+import {groupBy, map, sumBy, keyBy, orderBy} from 'lodash';
 import dayjs from 'dayjs';
+import {Picker} from '@react-native-picker/picker';
+import {SourceTypes} from './constants';
+import {RFPercentage} from 'react-native-responsive-fontsize';
+import styled from '@constants/styled';
+import {heightPercentageToDP as hp} from 'react-native-responsive-screen';
 
 const TransactionList: FC = () => {
+  const [selectedSource, setSelectedSource] = useState(SourceTypes.small);
+
   // Hook for fetching data
   const {transactions, isLoading, error} = useFetchData();
 
@@ -81,6 +77,38 @@ const TransactionList: FC = () => {
       ) : (
         // BALANCE LIST
         <ContainerCenter isMarginVertical1 isFullWidth>
+          <ContainerCenter flexDirectionRow isFullWidth alignItemsCenter>
+            <DefaultText isTextAlignCenter s style={{width: '50%'}}>
+              select source:
+            </DefaultText>
+            <View
+              style={{
+                width: '50%',
+                marginVertical: Platform.OS === 'ios' ? hp(-2) : 0,
+              }}>
+              <Picker
+                selectedValue={selectedSource}
+                onValueChange={itemValue => setSelectedSource(itemValue)}
+                style={{margin: 0, padding: 0}}
+                itemStyle={{
+                  height: hp(15),
+                  fontSize: styled.font.size.xs,
+                }}>
+                <Picker.Item
+                  label={SourceTypes.small}
+                  value={SourceTypes.small}
+                />
+                <Picker.Item
+                  label={SourceTypes.medium}
+                  value={SourceTypes.medium}
+                />
+                <Picker.Item
+                  label={SourceTypes.large}
+                  value={SourceTypes.large}
+                />
+              </Picker>
+            </View>
+          </ContainerCenter>
           <FlatList
             data={balancedUserTransactions}
             renderItem={({
@@ -96,8 +124,8 @@ const TransactionList: FC = () => {
                 />
               );
             }}
+            ListFooterComponent={<ContainerSpace mtM />}
             keyExtractor={item => item.uuid}
-            ItemSeparatorComponent={() => <ContainerSpace mtXS />}
           />
         </ContainerCenter>
       )}

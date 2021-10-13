@@ -25,7 +25,7 @@ const UserTransaction: FC<UserTransactionProps> = ({
   balanceGBP,
 }) => {
   return (
-    <View style={{flex: 1, marginHorizontal: wp(4)}}>
+    <View style={{flex: 1, marginHorizontal: wp(4), marginVertical: hp(1)}}>
       <View
         style={{
           height: hp(10),
