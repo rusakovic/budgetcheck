@@ -14,6 +14,7 @@ const TransactionList: FC = () => {
   // Hook for fetching data
   const {transactions, isLoading, error} = useFetchData(selectedSource);
 
+  // Transformed data
   const balancedUserTransactions = transformFetchedData(transactions);
 
   return (

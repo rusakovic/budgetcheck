@@ -1,14 +1,10 @@
 import React, {FC} from 'react';
-import {Text, View} from 'react-native';
+import {View} from 'react-native';
 import ContainerCenter from '@components/atoms/Containers/ContainerCenter';
 import DefaultText from '@components/atoms/Text/DefaultText/DefaultText';
-import {
-  heightPercentageToDP as hp,
-  widthPercentageToDP as wp,
-} from 'react-native-responsive-screen';
-import styled from '@constants/styled';
-import CurrencyFlagBalance from '@components/atoms/CurrencyFlagBalance/CurrencyFlagBalance';
 
+import CurrencyFlagBalance from '@components/atoms/CurrencyFlagBalance/CurrencyFlagBalance';
+import {UserTransactionStyles} from './styles';
 interface UserTransactionProps {
   userId: string;
   date: string;
@@ -25,32 +21,13 @@ const UserTransaction: FC<UserTransactionProps> = ({
   balanceGBP,
 }) => {
   return (
-    <View style={{flex: 1, marginHorizontal: wp(4), marginVertical: hp(1)}}>
-      <View
-        style={{
-          height: hp(10),
-          width: '100%',
-
-          borderRadius: 10,
-          elevation: 5,
-          shadowOffset: {
-            height: 1,
-            width: 5,
-          },
-          shadowColor: '#000',
-          shadowOpacity: 0.1,
-          backgroundColor: styled.colors.white.white,
-          shadowRadius: 5,
-        }}>
-        <View style={{height: '100%'}}>
+    <View style={UserTransactionStyles.mainWrapper}>
+      <View style={UserTransactionStyles.transactionContainer}>
+        <View style={UserTransactionStyles.innerWrapper}>
           {/* UUID  */}
           <ContainerCenter
             alignItemsCenter
-            style={{
-              borderBottomColor: styled.colors.grey5opacity,
-              borderBottomWidth: 1,
-              height: '25%',
-            }}>
+            style={UserTransactionStyles.uuidContainer}>
             <DefaultText xs>{userId}</DefaultText>
           </ContainerCenter>
 
@@ -60,24 +37,17 @@ const UserTransaction: FC<UserTransactionProps> = ({
             isVerticalCenter
             flexDirectionRow
             isContainer
-            style={{
-              borderBottomColor: styled.colors.grey5opacity,
-              borderBottomWidth: 1,
-              height: '50%',
-              justifyContent: 'space-between',
-              width: '100%',
-            }}>
-            <View style={{width: '33.3%'}}>
-              {/* EUR */}
+            style={UserTransactionStyles.allCurrencyContainer}>
+            {/* EUR */}
+            <View style={UserTransactionStyles.balanceContainer}>
               <CurrencyFlagBalance flagEmoji="🇪🇺" balance={balanceEUR} />
             </View>
-
-            <View style={{width: '33.3%'}}>
-              {/* GBP */}
+            {/* GBP */}
+            <View style={UserTransactionStyles.balanceContainer}>
               <CurrencyFlagBalance flagEmoji="🇬🇧" balance={balanceGBP} />
             </View>
-            <View style={{width: '33.3%'}}>
-              {/* USD */}
+            {/* USD */}
+            <View style={UserTransactionStyles.balanceContainer}>
               <CurrencyFlagBalance flagEmoji="🇺🇸" balance={balanceUSD} />
             </View>
           </ContainerCenter>
@@ -86,11 +56,7 @@ const UserTransaction: FC<UserTransactionProps> = ({
           <ContainerCenter
             isContainer
             flexDirectionRow
-            style={{
-              height: '25%',
-              justifyContent: 'flex-end',
-              alignItems: 'center',
-            }}>
+            style={UserTransactionStyles.lastVisitDataContainer}>
             <DefaultText xxs2>{date}</DefaultText>
           </ContainerCenter>
         </View>
