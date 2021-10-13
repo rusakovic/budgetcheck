@@ -1,7 +1,7 @@
 import React, {FC, useState} from 'react';
 import {ActivityIndicator, FlatList, Platform, View} from 'react-native';
 import ContainerCenter from '@components/atoms/Containers/ContainerCenter';
-import {UserTransaction} from '@components/molecules';
+import {SourceSelector, UserTransaction} from '@components/molecules';
 import ContainerSpace from '@components/atoms/Containers/ContainerSpace';
 import {useFetchData} from 'utils/fetchData/fetchDataHook';
 import DefaultText from '@components/atoms/Text/DefaultText/DefaultText';
@@ -56,38 +56,10 @@ const TransactionList: FC = () => {
   return (
     <>
       <ContainerCenter isMarginVertical1 isFullWidth>
-        <ContainerCenter flexDirectionRow isFullWidth alignItemsCenter>
-          <DefaultText isTextAlignCenter s style={{width: '50%'}}>
-            select source:
-          </DefaultText>
-          <View
-            style={{
-              width: '50%',
-              marginVertical: Platform.OS === 'ios' ? hp(-2) : 0,
-            }}>
-            <Picker
-              selectedValue={selectedSource}
-              onValueChange={itemValue => setSelectedSource(itemValue)}
-              style={{margin: 0, padding: 0}}
-              itemStyle={{
-                height: hp(15),
-                fontSize: styled.font.size.xs,
-              }}>
-              <Picker.Item
-                label={SourceTypes.small}
-                value={SourceTypes.small}
-              />
-              <Picker.Item
-                label={SourceTypes.medium}
-                value={SourceTypes.medium}
-              />
-              <Picker.Item
-                label={SourceTypes.large}
-                value={SourceTypes.large}
-              />
-            </Picker>
-          </View>
-        </ContainerCenter>
+        <SourceSelector
+          setSelectedSource={setSelectedSource}
+          selectedSource={selectedSource}
+        />
 
         {/* LOADING INDICATOR */}
         {isLoading ? (
