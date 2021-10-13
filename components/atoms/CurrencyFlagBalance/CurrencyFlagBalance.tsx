@@ -3,6 +3,7 @@ import React, {FC} from 'react';
 import ContainerCenter from '../Containers/ContainerCenter';
 import DefaultText from '../Text/DefaultText/DefaultText';
 import {CurrencyFlagBalanceStyles} from './styles';
+import styled from '@constants/styled';
 
 interface CurrencyFlagBalanceProps {
   flagEmoji: string;
@@ -19,7 +20,15 @@ const CurrencyFlagBalance: FC<CurrencyFlagBalanceProps> = ({
         {flagEmoji}
       </DefaultText>
 
-      <DefaultText s style={CurrencyFlagBalanceStyles.balance}>
+      <DefaultText
+        xs
+        fontFamilyMedium
+        fontColor={
+          balance > 0
+            ? styled.colors.green.positiveBalance
+            : styled.colors.red.redButton
+        }
+        style={CurrencyFlagBalanceStyles.balance}>
         {balance}
       </DefaultText>
     </ContainerCenter>

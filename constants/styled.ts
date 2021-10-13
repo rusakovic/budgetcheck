@@ -32,7 +32,9 @@ const styled = {
       white60opacity: 'rgba(255,255,255,0.6)',
       navigatorHeader: '#F6F6F6',
     },
-
+    green: {
+      positiveBalance: '#8ecc58',
+    },
     red: {
       redButton: '#cc5858',
     },

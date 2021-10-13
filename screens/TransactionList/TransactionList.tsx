@@ -90,9 +90,9 @@ const TransactionList: FC = () => {
                 <UserTransaction
                   userId={uuid}
                   date={latestTransactionDate}
-                  balanceEUR={transactions?.EUR?.totalBalance ?? '-'}
-                  balanceGBP={transactions?.GBP?.totalBalance ?? '-'}
-                  balanceUSD={transactions?.USD?.totalBalance ?? '-'}
+                  balanceEUR={transactions?.EUR?.totalBalance ?? ''}
+                  balanceGBP={transactions?.GBP?.totalBalance ?? ''}
+                  balanceUSD={transactions?.USD?.totalBalance ?? ''}
                 />
               );
             }}

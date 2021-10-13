@@ -65,15 +65,21 @@ const UserTransaction: FC<UserTransactionProps> = ({
               borderBottomWidth: 1,
               height: '50%',
               justifyContent: 'space-between',
+              width: '100%',
             }}>
-            {/* EUR */}
-            <CurrencyFlagBalance flagEmoji="🇪🇺" balance={balanceEUR} />
+            <View style={{width: '33.3%'}}>
+              {/* EUR */}
+              <CurrencyFlagBalance flagEmoji="🇪🇺" balance={balanceEUR} />
+            </View>
 
-            {/* GBP */}
-            <CurrencyFlagBalance flagEmoji="🇬🇧" balance={balanceGBP} />
-
-            {/* USD */}
-            <CurrencyFlagBalance flagEmoji="🇺🇸" balance={balanceUSD} />
+            <View style={{width: '33.3%'}}>
+              {/* GBP */}
+              <CurrencyFlagBalance flagEmoji="🇬🇧" balance={balanceGBP} />
+            </View>
+            <View style={{width: '33.3%'}}>
+              {/* USD */}
+              <CurrencyFlagBalance flagEmoji="🇺🇸" balance={balanceUSD} />
+            </View>
           </ContainerCenter>
 
           {/* LAST VISIT DATE  */}
