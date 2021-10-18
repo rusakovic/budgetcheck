@@ -1,4 +1,4 @@
-import React, {FC, useState} from 'react';
+import React, {FC, useMemo, useState} from 'react';
 import {ActivityIndicator, FlatList} from 'react-native';
 import ContainerCenter from '@components/atoms/Containers/ContainerCenter';
 import {SourceSelector, UserTransaction} from '@components/molecules';
@@ -15,7 +15,10 @@ const TransactionList: FC = () => {
   const {transactions, isLoading, error} = useFetchData(selectedSource);
 
   // Transformed data
-  const balancedUserTransactions = transformFetchedData(transactions);
+  const balancedUserTransactions = useMemo(
+    () => transformFetchedData(transactions),
+    [transactions],
+  );
 
   return (
     <>
